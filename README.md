@@ -14,3 +14,4 @@ You can just yarn install and run
 3. React Query
 4. TypeScript
 5. Commitlint & ESLint with Husky hooks (and lint-staged)
+6. Jest unit testing
