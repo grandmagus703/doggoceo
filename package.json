@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint src --ext ts,tsx",
+    "test": "jest",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -29,10 +30,12 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@commitlint/config-conventional": "^17.0.0",
+    "@types/jest": "^27.5.1",
     "@types/node": "^17.0.35",
     "@types/react": "^17.0.2",
     "@types/react-native": "~0.66.13",
     "@types/react-native-autocomplete-input": "^5.0.0",
+    "@types/react-test-renderer": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "babel-plugin-module-resolver": "^4.1.0",
@@ -45,6 +48,8 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-react-native": "^4.0.0",
     "husky": "^7.0.0",
+    "jest": "^28.1.0",
+    "jest-expo": "^45.0.1",
     "lint-staged": "^12.4.2",
     "react-test-renderer": "^17.0.2",
     "typescript": "~4.3.5"
@@ -53,5 +58,10 @@
     "src/**/*.{ts,tsx}": [
       "eslint"
     ]
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [],
+    "moduleFileExtensions": ["js", "jsx", "ts", "tsx"]
   }
 }
