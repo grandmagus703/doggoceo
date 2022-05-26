@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useQuery } from "react-query"
 
 import { usePagination } from "./pagination"
+
+import { fetchAllBreeds, fetchBreedImage, fetchBreedImages } from "~apis/breeds"
 
 export const useBreeds = () => {
   // Fetch breeds information
   const { data: breeds } = useQuery(
     ['dog breeds'],
-    () => fetch('https://dog.ceo/api/breeds/list/all').then(res => res.json().then(({ message }) => Object.keys(message)))
+    () => fetchAllBreeds()
   )
 
   return {
@@ -19,7 +21,7 @@ export const useBreedItem = (breed: string) => {
   // Fetch breedItem information
   const { data: breedImage } = useQuery(
     ['breed image', breed],
-    () => fetch(`https://dog.ceo/api/breed/${breed}/images/random`).then(res => res.json().then(({ message }) => message)),
+    () => fetchBreedImage(breed),
     // Un-comment this when we need to cache breed image
     // Caching is not needed per requirement
     // { staleTime: Infinity }
@@ -37,7 +39,7 @@ export const useBreedDetails = (breed: string) => {
   // Fetch breedImages
   const { isLoading: loadingBreedImages, data: breedImages } = useQuery(
     ['breed images', breed],
-    () => fetch(`https://dog.ceo/api/breed/${breed}/images`).then(res => res.json().then(({ message }) => message as string[])),
+    () => fetchBreedImages(breed),
     // This should be cached for performance
     { staleTime: Infinity }
   )
