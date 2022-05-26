@@ -2,10 +2,16 @@ import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import DoggoBreedSearch from '~components/DoggoBreedSearch';
 
 import { useBreeds } from '~hooks/breeds';
+
+import { AuthNavigatorParams } from '~types';
+import { AuthStack } from '~consts/screens';
+
+type Props = NativeStackScreenProps<AuthNavigatorParams, AuthStack.Details>
 
 const getStyles = (colors: Record<string, string>) => StyleSheet.create({
   container: {
@@ -20,7 +26,7 @@ const getStyles = (colors: Record<string, string>) => StyleSheet.create({
   }
 });
 
-function Breeds({ navigation }: any) {
+function Breeds({ navigation }: Props) {
   const { colors } = useTheme()
   const styles = React.useMemo(
     () => getStyles(colors),
@@ -30,7 +36,7 @@ function Breeds({ navigation }: any) {
   const { breeds } = useBreeds()
 
   const onBreedSelected = (breed: string) => {
-    navigation.push('Details', { breed })
+    navigation.push(AuthStack.Details, { breed })
   }
 
   return (
