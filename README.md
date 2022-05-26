@@ -2,7 +2,7 @@
 
 ## Dev Environment
 
-You can just yarn install and run
+You can just yarn install and run  
 ```yarn & yarn start```
 ```yarn & yarn ios```
 ```yarn & yarn android```
