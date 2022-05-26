@@ -58,6 +58,8 @@ function Details({ route }: Props) {
   const [galleryWidth, setGalleryWidth] = React.useState(0)
   const { pagination, isLastPage, gotoNextPage, gotoPrevPage, breedImages } = useBreedDetails(route.params.breed)
 
+  // Get imgaes on current page
+  // UseMemo for pagination performance
   const imagesOnCurrentPage = React.useMemo(
     () => (breedImages || []).slice(pagination.current * pagination.itemsPerPage, (pagination.current + 1) * pagination.itemsPerPage),
     [breedImages, pagination.current, pagination.total]
