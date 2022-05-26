@@ -2,8 +2,14 @@ import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '@react-navigation/native';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useBreedDetails } from '~hooks/breeds';
+
+import { AuthNavigatorParams } from '~types';
+import { AuthStack } from '~consts/screens';
+
+type Props = NativeStackScreenProps<AuthNavigatorParams, AuthStack.Details>
 
 const getStyles = (colors: Record<string, string>) => StyleSheet.create({
   container: {
@@ -43,14 +49,19 @@ const getStyles = (colors: Record<string, string>) => StyleSheet.create({
   }
 });
 
-function Details({ route }: any) {
+function Details({ route }: Props) {
   const { colors } = useTheme()
   const styles = React.useMemo(
     () => getStyles(colors),
     [colors]
   )
   const [galleryWidth, setGalleryWidth] = React.useState(0)
-  const { pagination, setPagination, isLastPage, gotoNextPage, gotoPrevPage, loadingBreedImages, breedImages } = useBreedDetails(route.params.breed)
+  const { pagination, isLastPage, gotoNextPage, gotoPrevPage, breedImages } = useBreedDetails(route.params.breed)
+
+  const imagesOnCurrentPage = React.useMemo(
+    () => (breedImages || []).slice(pagination.current * pagination.itemsPerPage, (pagination.current + 1) * pagination.itemsPerPage),
+    [breedImages, pagination.current, pagination.total]
+  )
 
   return (
     <View style={styles.container}>
@@ -70,7 +81,7 @@ function Details({ route }: any) {
       </View>
 
       <View style={styles.gallery} onLayout={(event) => setGalleryWidth(event.nativeEvent.layout.width)}>
-        {(breedImages || []).slice(pagination.current * pagination.itemsPerPage, (pagination.current + 1) * pagination.itemsPerPage).map((image) => (
+        {imagesOnCurrentPage.map((image) => (
           <Image style={{...styles.galleryImage, width: galleryWidth / 3, height: galleryWidth / 3}} source={{uri: image}} key={image} />
         ))}
       </View>
